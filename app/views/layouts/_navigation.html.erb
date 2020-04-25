@@ -1,0 +1,23 @@
+<style>
+.header {
+  background-color: rgb(107, 201, 226);
+  padding: 20px;
+  text-align: center;
+}
+</style>
+<div class="header">
+    <h2 style="text-align:center">Login with Social Media</h2>
+    <div class="col-md-2">
+      <% if current_user %>
+          Signed in as <%= current_user.name %>
+          <%= link_to 'Log Out', logout_path, method: :delete %>
+
+      <% else %>
+        <%= link_to '/auth/twitter',class: 'twitter btn' do %>
+          <i class="icon-ok icon-white"></i> Sign in with Twitter
+        <% end %>
+      <%end%>
+      
+    </div>
+</div>
+

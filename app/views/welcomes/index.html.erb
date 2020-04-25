@@ -1,0 +1,121 @@
+<div class="container-fluid">
+  <div class="content-wrapper">
+      <section class="content-header">
+        <div class="container-fluid">
+          <div class="row mb-2">
+            <div class="col-md-2">
+              <h1>Tweets</h1>
+            </div>
+            <div class="col-md-2">
+                <a href="#" class="btn btn-primary float-right" data-toggle="modal" data-target="#myModal">
+                  </i> New Tweet
+                </a>
+            </div>
+          </div>
+        </div>
+      </section>
+      <section class="content">
+
+        <div class="card card-solid">
+          <div class="card-body pb-0">
+            <div class="row d-flex align-items-stretch">
+              <% unless @tweets.blank? %>
+                <% @tweets.each do |tweet|%>
+                <div class="col-md-4 align-items-stretch">
+                  <div class="card bg-light">
+                    <div class="card-body pt-0">
+                      <div class="row">
+                        <div class="col-md-7">
+                          <h2 class="lead"><b><%= tweet.user_name%></b></h2>
+                          <p class="text-muted text-sm"><b>Tweet Text: </b> <%= tweet.tweet_text.first(80) %> </p>
+                          
+                        </div>
+                        <div class="col-md-5 text-center">
+                          <% if tweet.user_profile_url.present? %>
+                            <%= image_tag(tweet.user_profile_url,class: 'img-circle img-fluid') %>
+                          <%else%>
+                            <img src="/assets/user1-128x128.jpg" alt="" class="img-circle img-fluid">
+                          <%end%>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="card-footer">
+                      <div class="text-right col-md-4">
+                        <a href="#myModal<%= tweet.id%>" role="button" data-toggle="modal" class="btn btn-primary">
+                          </i> Tweet Read More
+                        </a>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div  id="myModal<%= tweet.id%>" class="modal fade" >
+                  <div class="modal-dialog">
+
+                    <div class="modal-content">
+                      <div class="modal-header note">
+                        <button type="button" class="close" data-dismiss="modal">&times;</button>
+                        <h4 class="modal-title">Tweet</h4>
+                      </div>
+                      <div class="modal-body">
+                        <p><%= tweet.tweet_text %></p>
+                      </div>
+                    </div>
+
+                  </div>
+                </div>
+                <%end%>
+              <%end%>
+            </div>
+          </div>
+          <div class="card-footer">
+            <nav aria-label="Contacts Page Navigation">
+              <ul class="pagination justify-content-center m-0">
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">4</a></li>
+                <li class="page-item"><a class="page-link" href="#">5</a></li>
+                <li class="page-item"><a class="page-link" href="#">6</a></li>
+                <li class="page-item"><a class="page-link" href="#">7</a></li>
+                <li class="page-item"><a class="page-link" href="#">8</a></li>
+              </ul>
+            </nav>
+          </div>
+          <!-- /.card-footer -->
+        </div>
+        <!-- /.card -->
+
+      </section>
+  </div>
+</div>
+<div id="myModal" class="modal fade" role="dialog">
+      <div class="modal-dialog">
+
+        <div class="modal-content">
+          <div class="modal-header note">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Create Tweet</h4>
+          </div>
+          <div class="modal-body">
+            <div class="form">
+              <%= form_with model: Tweet.new do |f| %>
+                <div class="form-content">
+                  <div class="row">
+                      <div class="col-md-6">
+                          <div class="form-group">
+                            <%= f.text_area :tweet_text,required: true %>
+                          </div>
+                          <div class="form-group">
+                            <%= f.file_field :user_profile_url %>
+                          </div>
+                      </div>
+                  <%= f.submit "Create",class: 'btn btn-primary' %>
+                  </div>
+                </div>
+              <% end %>
+            </div>
+          </div>
+        </div>
+
+      </div>
+</div>
